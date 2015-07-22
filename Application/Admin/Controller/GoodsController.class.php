@@ -179,7 +179,7 @@ class GoodsController extends AdminController {
                 $model = M('Model')->getById($model_id);
                 if (empty($model['list_grid'])) {
                     $model['list_grid'] = M('Model')->getFieldByName('document','list_grid');
-                }                
+                }
             }
             $this->assign('model', explode(',', $models));
         }else{
@@ -226,7 +226,7 @@ class GoodsController extends AdminController {
        $list   =   $this->getDocumentList($cate_id, $model_id,$position,$fields);// $model_id用5替代
         // 列表显示处理
         $list   =   $this->parseDocumentList($list,$model_id);
-        
+
         $this->assign('model_id',$model_id);
 		$this->assign('group_id',$group_id);
         $this->assign('position',$position);
@@ -291,7 +291,7 @@ class GoodsController extends AdminController {
                     unset($field[$key]);
                     $field[] = 'DOCUMENT.id';
                 }
-            }            
+            }
         }
         if(!is_null($position)){
             $map[] = "position & {$position} = {$position}";
@@ -714,7 +714,7 @@ class GoodsController extends AdminController {
         }else{
             $modelList =   M('Category')->getFieldById($cate_id,'model');   // 当前分类支持的文档模型
         }
-        
+
         foreach ($list as $key => $value){
             //不能将自己粘贴为自己的子内容
             if($value == $pid){
@@ -799,27 +799,27 @@ class GoodsController extends AdminController {
     }
 public function del(){
      if(IS_GET){
-		  $id=I('get.ids');  
+		  $id=I('get.ids');
           $document   =   D('Document');
-        
+
         if( $document->where("id='$id'")->setField("status",-1)){
             $this->success('删除成功');
         }
 		else{
-            
+
 		 $this->error('删除失败');
         }
 		}
-		
+
   if(IS_POST){
              $ids = I('post.id');
             $document = M("document");
-			
+
             if(is_array($ids)){
                              foreach($ids as $id){
-		
+
                              $document->where("id='$id'")->setField("status",-1);
-						
+
                 }
             }
            $this->success("删除成功！");

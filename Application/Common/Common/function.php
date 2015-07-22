@@ -1191,12 +1191,10 @@ function get_model_attribute($model_id, $group = true,$fields=true){
             $attr[$value['id']] = $value;
         }
         $sort  = M('Model')->getFieldById($model_id,'field_sort');
-
         if(empty($sort)){	//未排序
             $group = array(1=>array_merge($attr));
         }else{
             $group = json_decode($sort, true);
-
             $keys  = array_keys($group);
             foreach ($group as &$value) {
                 foreach ($value as $key => $val) {
@@ -1204,7 +1202,6 @@ function get_model_attribute($model_id, $group = true,$fields=true){
                     unset($attr[$val]);
                 }
             }
-
             if(!empty($attr)){
                 $group[$keys[0]] = array_merge($group[$keys[0]], $attr);
             }
