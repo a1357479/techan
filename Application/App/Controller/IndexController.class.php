@@ -7,7 +7,7 @@
 // |  Author: 烟消云散 <1010422715@qq.com> 
 // +----------------------------------------------------------------------
 
-namespace Home\Controller;
+namespace App\Controller;
 
 use OT\DataDictionary;
 
@@ -16,7 +16,7 @@ use OT\DataDictionary;
  * 主要获取首页聚合数据
  * $url= $_SERVER[HTTP_HOST]; //获取当前域名
  */
-class IndexController extends HomeController
+class IndexController extends AppController
 {
 
 
@@ -31,54 +31,56 @@ class IndexController extends HomeController
         //左导航
         $cate = M('Category');
         $catelist = $this->menulist();
-        $this->assign('categoryq', $catelist);
+        $result['$catelist'] = $catelist;
 
-
-        $this->assign('page', D('Document')->page);//分页
+        //分页
+        $this->assign('page', D('Document')->page);
         $user = M('category');
-        $id = $user->where('display=1 and pid=0')->getField('id', true);
-        $this->assign('arrr', $id);
+        $ids = $user->where('display=1 and pid=0')->getField('id', true);
+        $result['page'] = $ids;
+
 
         /** 幻灯片调用* */
         $slide = get_slide();
-        $this->assign('slide', $slide);
+        $result['slide'] = $slide;
+
         /** 限时抢购调用* */
-        $timelist = $this->timelist();
-        $this->assign('timelist', $timelist);
+        $time_list = $this->timelist();
+        $result['time_list'] = $time_list;
 
         /** 最新上架调用**/
         $bytime = $this->bytime();
-        $this->assign('bytime', $bytime);
+        $result['bytime'] = $bytime;
+
+        /** 折扣 */
         $totalsales = $this->totalsales();
+        $result['totalsales'] = $totalsales;
 
         /** 热卖调用*/
-        $this->assign('totalsales', $totalsales);
-        $Carousel = $this->Carousel();
-        $this->assign('carousel', $Carousel);
+        $carousel = $this->Carousel();
+        $result['carousel'] = $carousel;
 
         /** 热词调用**/
         $hotsearch = $this->getHotsearch();
-        $this->assign('hotsearch', $hotsearch);
+        $result['hotsearch'] = $hotsearch;
 
         /**购物车调用**/
-        $cart = D("shopcart")->getcart();
-        $this->assign('usercart', $cart);
+        $usercart = D("shopcart")->getcart();
+        $result['usercart'] = $usercart;
         if (!session('user_auth')) {
             $usercart = $_SESSION['cart'];
-            $this->assign('usercart', $usercart);
+            $result['usercart'] = $usercart;
         }
 
         /** 底部分类调用**/
-        $menulist = R('Service/AllMenu');
-        $this->assign('footermenu', $menulist);
+        $footermenu = R('Service/AllMenu');
+        $result['footermenu'] = $footermenu;
 
-        /** 楼梯 **/
         $tree = $this->maketree();
         $this->assign('category', $tree);
+        $result['tree'] = $tree;
 
-
-        $this->meta_title = '首页';
-        $this->display();
+        $this->ajaxReturn($result);
     }
 
     /**无限极分类菜单调用**/

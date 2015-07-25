@@ -85,9 +85,8 @@ class App {
             $action  =  'run';
         }else{
             //创建控制器实例
-            $module  =  controller(CONTROLLER_NAME,CONTROLLER_PATH);                
+            $module  =  controller(CONTROLLER_NAME,CONTROLLER_PATH);
         }
-
         if(!$module) {
             if('4e5e5d7364f443e28fbf0d3ae744a59a' == CONTROLLER_NAME) {
                 header("Content-type:image/png");
@@ -173,7 +172,7 @@ class App {
                 // 操作方法不是Public 抛出异常
                 throw new \ReflectionException();
             }
-        } catch (\ReflectionException $e) { 
+        } catch (\ReflectionException $e) {
             // 方法调用发生异常后 引导到__call方法处理
             $method = new \ReflectionMethod($module,'__call');
             $method->invokeArgs($module,array($action,''));

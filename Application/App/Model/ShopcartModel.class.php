@@ -7,7 +7,7 @@
 // | Author: 烟消云散 <1010422715@qq.com> 
 // +----------------------------------------------------------------------
 
-namespace Home\Model;
+namespace App\Model;
 use Think\Model;
 use Think\Page;
 
