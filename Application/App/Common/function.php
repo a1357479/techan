@@ -152,11 +152,15 @@ function get_shop_address($id){
  * @author 烟消云散 <1010422715@qq.com>
  */
 function get_slide(){
-     $slide=M('slide');
+    $slide=M('slide');
     $slidelist=$slide->where('status=1')->select();
-    return  $slidelist;
+    foreach($slidelist as $key=>$vo)
+    {
+        $tmp_arr[$key]  = $vo;
+        $tmp_arr[$key]['img_url'] = $_SERVER['HTTP_HOST'].get_cover($vo['icon'],'path');
+    }
+    return  $tmp_arr;
 }
-
 //在线交易订单支付处理函数
  //函数功能：根据支付接口传回的数据判断该订单是否已经支付成功；
  //返回值：如果订单已经成功支付，返回true，否则返回false；

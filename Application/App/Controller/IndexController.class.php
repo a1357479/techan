@@ -39,7 +39,6 @@ class IndexController extends AppController
         $ids = $user->where('display=1 and pid=0')->getField('id', true);
         $result['page'] = $ids;
 
-
         /** 幻灯片调用* */
         $slide = get_slide();
         $result['slide'] = $slide;
@@ -76,6 +75,7 @@ class IndexController extends AppController
         $footermenu = R('Service/AllMenu');
         $result['footermenu'] = $footermenu;
 
+        /** 楼梯 **/
         $tree = $this->maketree();
         $this->assign('category', $tree);
         $result['tree'] = $tree;

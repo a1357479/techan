@@ -41,7 +41,9 @@ class IndexController extends HomeController
 
         /** 幻灯片调用* */
         $slide = get_slide();
+
         $this->assign('slide', $slide);
+
         /** 限时抢购调用* */
         $timelist = $this->timelist();
         $this->assign('timelist', $timelist);

@@ -154,7 +154,12 @@ function get_shop_address($id){
 function get_slide(){
      $slide=M('slide');
     $slidelist=$slide->where('status=1')->select();
-    return  $slidelist;
+    foreach($slidelist as $key=>$vo)
+    {
+        $tmp_arr[$key]  = $vo;
+        $tmp_arr[$key]['img_url'] = get_cover($vo['icon'],'path');
+    }
+    return  $tmp_arr;
 }
 
 //在线交易订单支付处理函数
